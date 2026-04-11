@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Контакты - PC review</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Сборка компьютеров под ключ в Алексеевке. Игровые и рабочие ПК. Индивидуальный подбор. Гарантия 12 месяцев.">
+    <meta name="keywords" content="сборка пк, компьютер, игровой пк, алексеевка, компьютерный магазин">
+    <meta name="author" content="PC review">
+</head>
+<body>
+
+      <div class="header">
+         <a href="index.html" class="logo">PC review!</a>
+            <div class="nav-links">
+               <a href="index.html">Главная</a>
+               <a href="katalog.html">Каталог</a>
+               <a href="kontakti.html">Контакты</a>
+            </div>
+       </div>
+
+    <!-- Заголовок страницы -->
+    <div class="page-title">
+        <h1>Свяжитесь с нами</h1>
+        <p>Оставьте заявку, и мы подберем идеальный ПК</p>
+    </div>
+
+    <!-- Форма обратной связи -->
+    <div class="contact-form">
+        <h2>Форма заявки</h2>
+        
+        <form id="tgForm">
+            
+            <div class="form-group">
+                <label>Ваше имя:</label>
+                <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Телефон:</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" id="email" name="email" placeholder="example@mail.ru">
+            </div>
+            
+            <div class="form-group">
+                <label>Интересует сборка:</label>
+                <select id="build" name="build">
+                    <option value="Starter">Игровая сборка "Starter" (97 000 ₽)</option>
+                    <option value="Gamer Pro">Игровая сборка "Gamer Pro" (149 000 ₽)</option>
+                    <option value="Ultimate">Игровая сборка "Ultimate" (289 000 ₽)</option>
+                    <option value="custom">Собственная сборка</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Ваш вопрос:</label>
+                <textarea id="message" name="message" rows="5" placeholder="Опишите, какой компьютер вам нужен..."></textarea>
+            </div>
+            
+            <div class="form-group checkbox-group">
+               <label class="checkbox-label">
+                  <input type="checkbox" id="agreement" required>
+                   Я согласен на <a href="privacy.html" target="_blank">обработку персональных данных</a>
+               </label>
+            </div> 
+
+            <button type="submit" class="submit-btn" id="submitBtn">Отправить заявку</button>
+            
+        </form>
+        
+        <!-- Блок для сообщения об успехе/ошибке -->
+        <div id="formStatus" style="margin-top: 20px; text-align: center;"></div>
+    </div>
+
+    <!-- Контактная информация -->
+    <div class="contact-info">
+        <h3>Наши контакты</h3>
+        <p>📞 Телефон: +7 (952) 430-79-76</p>
+        <p>✉️ Email: <a href="mailto:pc-review@gmail.com">pc-review@gmail.com</a></p>
+        <p>📍 Адрес: г. Алексеевка, 1-ый пер. Мостовой, 2Б</p>
+        <p>⏰ Режим работы: Пн-Пт 9:00 - 21:00</p>
+    </div>
+
+       <script>
+        // ВСТАВЬ СВОИ ДАННЫЕ:
+        const BOT_TOKEN = '8454099739:AAGmWyYFBRp-_SLIjh_d-l-m_gZP8LTwkyI';
+        const CHAT_ID = '1362757094';
+        
+        const form = document.getElementById('tgForm');
+        const statusDiv = document.getElementById('formStatus');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            // Показываем, что идет отправка
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Отправка...';
+            statusDiv.innerHTML = '<p style="color: #00d2ff;">⏳ Отправляем заявку...</p>';
+            
+            // Собираем данные из формы
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const build = document.getElementById('build').value;
+            const message = document.getElementById('message').value.trim();
+            
+            // Проверяем обязательные поля
+            if (!name || !phone) {
+                statusDiv.innerHTML = '<p style="color: red;">❌ Пожалуйста, заполните имя и телефон</p>';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить заявку';
+                return;
+            }
+            
+            const agreement = document.getElementById('agreement').checked;
+            if (!agreement) {
+                statusDiv.innerHTML = '<p style="color: red;">❌ Пожалуйста, подтвердите согласие на обработку данных</p>';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить заявку';
+                return;
+            }
+            
+            // Формируем сообщение для Telegram
+            const telegramMessage = `📦 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email || 'не указан'}\n💻 Сборка: ${build}\n\n📝 Сообщение:\n${message || 'не указано'}\n\n🕐 Время: ${new Date().toLocaleString('ru-RU')}`;
+            
+            // Прокси-адрес для обхода блокировки
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const telegramApiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            let response;
+            let result;
+            
+            try {
+                // Пробуем через прокси
+                response = await fetch(proxyUrl + telegramApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: telegramMessage
+                    })
+                });
+                result = await response.json();
+                
+                if (result.ok) {
+                    statusDiv.innerHTML = '<p style="color: green;">✅ Заявка отправлена! Мы свяжемся с вами.</p>';
+                    form.reset();
+                } else {
+                    throw new Error('Ошибка через прокси');
+                }
+            } catch (error) {
+                // Если прокси не сработал, пробуем прямой запрос
+                try {
+                    response = await fetch(telegramApiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: telegramMessage
+                        })
+                    });
+                    result = await response.json();
+                    
+                    if (result.ok) {
+                        statusDiv.innerHTML = '<p style="color: green;">✅ Заявка отправлена! Мы свяжемся с вами.</p>';
+                        form.reset();
+                    } else {
+                        throw new Error('Ошибка прямого запроса');
+                    }
+                } catch (finalError) {
+                    console.error('Ошибка:', finalError);
+                    statusDiv.innerHTML = '<p style="color: red;">❌ Не удалось отправить заявку. Позвоните нам: +7 (952) 430-79-76</p>';
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Отправить заявку';
+                setTimeout(() => {
+                    if (statusDiv.innerHTML.includes('✅') || statusDiv.innerHTML.includes('❌')) {
+                        statusDiv.innerHTML = '';
+                    }
+                }, 5000);
+            }
+        });
+    </script>
+
+<a href="#" class="back-to-top">↑</a>
+
+<a href="https://t.me/pc_skupka" class="telegram-widget" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+    <span>Написать в Telegram</span>
+</a>
+
+</body>
+</html>
