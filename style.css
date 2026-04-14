@@ -688,3 +688,36 @@ html {
         right: 15px;
     }
 }
+
+/* Отступы для всего контента на телефонах */
+@media (max-width: 768px) {
+    body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    /* Для баннера убираем лишние отступы, чтобы не было двойных */
+    .banner {
+        margin-left: -10px;
+        margin-right: -10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .telegram-widget {
+        bottom: 20px;
+        right: 10px;
+        padding: 8px;
+    }
+    
+    .telegram-widget span {
+        display: none;  /* Скрываем текст, оставляем только иконку */
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 60px;  /* Сдвигаем, чтобы не пересекалась с Telegram */
+    }
+}
