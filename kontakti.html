@@ -196,5 +196,14 @@
     <span>Написать в Telegram</span>
 </a>
 
+    <script>
+    // Автоматически подстраиваем отступ под высоту шапки
+    function adjustHeaderOffset() {
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        document.body.style.paddingTop = headerHeight + 'px';
+    }
+    window.addEventListener('load', adjustHeaderOffset);
+    window.addEventListener('resize', adjustHeaderOffset);
+</script>
 </body>
 </html>
