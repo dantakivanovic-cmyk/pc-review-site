@@ -502,3 +502,186 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 70px;  /* Это компенсирует фиксированную шапку при якорях */
 }
+/* ========== АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ (до 768px) ========== */
+@media (max-width: 768px) {
+    
+    /* Шапка становится вертикальной */
+    .header {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .nav-links {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* Баннер */
+    .banner {
+        padding: 40px 15px;
+    }
+    
+    .banner h1 {
+        font-size: 24pt;
+    }
+    
+    .banner p {
+        font-size: 14pt;
+    }
+    
+    /* Преимущества — в столбик */
+    .features {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 15px;
+    }
+    
+    .feature-card {
+        width: 90%;
+    }
+    
+    /* Заголовки страниц */
+    .page-title {
+        padding: 30px 15px;
+    }
+    
+    .page-title h1 {
+        font-size: 22pt;
+    }
+    
+    /* Карточки товаров — в столбик */
+    .card {
+        flex-direction: column;
+        width: 95%;
+        margin: 0 auto 20px auto;
+    }
+    
+    .card-image {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .card-content {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .card-content h3 {
+        font-size: 18pt;
+    }
+    
+    .price {
+        font-size: 20pt;
+    }
+    
+    /* Форма и контакты */
+    .contact-form {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    .contact-info {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    /* Карта */
+    .map-container {
+        width: 95%;
+    }
+    
+    .map-selection h2 {
+        font-size: 22pt;
+    }
+    
+    /* Кнопки */
+    .order-btn, .submit-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    
+    /* Поля ввода */
+    .form-group input[type="text"],
+    .form-group input[type="tel"],
+    .form-group input[type="email"],
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Чтобы не срабатывал зум на телефонах */
+    }
+}
+
+/* ========== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ (до 480px) ========== */
+@media (max-width: 480px) {
+    
+    .banner h1 {
+        font-size: 20pt;
+    }
+    
+    .banner p {
+        font-size: 12pt;
+    }
+    
+    .feature-card h3 {
+        font-size: 16pt;
+    }
+    
+    .feature-card p {
+        font-size: 11pt;
+    }
+    
+    .page-title h1 {
+        font-size: 20pt;
+    }
+    
+    .page-title p {
+        font-size: 12pt;
+    }
+    
+    .card-content h3 {
+        font-size: 16pt;
+    }
+    
+    .specs li {
+        font-size: 11pt;
+    }
+    
+    .price {
+        font-size: 18pt;
+    }
+    
+    .contact-form h2 {
+        font-size: 20pt;
+    }
+    
+    .contact-info h3 {
+        font-size: 18pt;
+    }
+    
+    .contact-info p {
+        font-size: 11pt;
+    }
+    
+    .back-to-top, .telegram-widget {
+        transform: scale(0.9);
+    }
+    
+    .telegram-widget span {
+        display: none; /* На телефонах скрываем текст, оставляем только иконку */
+    }
+    
+    .telegram-widget {
+        padding: 10px;
+        border-radius: 50%;
+        bottom: 90px;
+        right: 15px;
+    }
+    
+    .back-to-top {
+        bottom: 20px;
+        right: 15px;
+    }
+}
