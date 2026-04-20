@@ -91,14 +91,12 @@
     const statusDiv = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
     
-    // ⚠️ ВАЖНО: замените этот URL на ваш реальный адрес на Render.com
-    // Например: https://pc-review-backend.onrender.com
-    const BACKEND_URL = 'https://pc-review-backend.onrender.com';
+    // ⚠️ ВАЖНО: замените на ваш реальный адрес на Render.com
+    const BACKEND_URL = 'https://ВАШ-ПРОЕКТ.onrender.com';
     
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        // Собираем данные
         const name = document.getElementById('name').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -106,7 +104,6 @@
         const message = document.getElementById('message').value.trim();
         const agreement = document.getElementById('agreement').checked;
         
-        // Валидация
         if (!name || !phone) {
             statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Пожалуйста, заполните имя и телефон</p>';
             return;
@@ -117,7 +114,6 @@
             return;
         }
         
-        // UI: состояние загрузки
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.7';
         submitBtn.textContent = '⏳ Отправка...';
@@ -126,29 +122,26 @@
         try {
             const response = await fetch(`${BACKEND_URL}/api/submit-order`, {
                 method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, phone, email, build, message })
             });
             
             const result = await response.json();
             
             if (response.ok && result.success) {
-                statusDiv.innerHTML = '<p style="color: #10b981;">✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.</p>';
+                statusDiv.innerHTML = '<p style="color: #10b981;">✅ Заявка отправлена! Мы свяжемся с вами в ВК.</p>';
                 form.reset();
             } else {
                 throw new Error(result.error || 'Ошибка сервера');
             }
         } catch (error) {
             console.error('Ошибка:', error);
-            statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Не удалось отправить заявку. Пожалуйста, позвоните нам: +7 (952) 430-79-76</p>';
+            statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Не удалось отправить заявку. Позвоните нам: +7 (952) 430-79-76</p>';
         } finally {
             submitBtn.disabled = false;
             submitBtn.style.opacity = '1';
             submitBtn.textContent = 'Отправить заявку';
             
-            // Автоматически скрываем сообщение через 5 секунд
             setTimeout(() => {
                 if (statusDiv.innerHTML.includes('✅') || statusDiv.innerHTML.includes('❌')) {
                     statusDiv.innerHTML = '';
