@@ -32,7 +32,7 @@ db.run(`
 // ===== ФУНКЦИЯ ОТПРАВКИ В ВКОНТАКТЕ =====
 async function sendToVK(text) {
     // peer_id с минусом = сообщество (беседа)
-    const peerId = -VK_GROUP_ID;
+    const peerId = 523418464;
     
     const url = `https://api.vk.com/method/messages.send`;
     const params = new URLSearchParams({
