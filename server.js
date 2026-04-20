@@ -28,6 +28,14 @@ db.run(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )
 `);
+db.run(`
+  CREATE TABLE IF NOT EXISTS visitors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip TEXT NOT NULL,
+    visit_date TEXT NOT NULL,
+    UNIQUE(ip, visit_date)
+  )
+`);
 
 // ===== ФУНКЦИЯ ОТПРАВКИ В ВКОНТАКТЕ =====
 async function sendToVK(text) {
@@ -167,6 +175,48 @@ app.get('/', (req, res) => {
         }
     });
 });
+// API: получить количество уникальных посетителей за сегодня
+app.get('/api/visitors/today', (req, res) => {
+    const today = new Date().toISOString().split('T')[0]; // '2026-04-20'
+    
+    db.get(
+        'SELECT COUNT(*) as count FROM visitors WHERE visit_date = ?',
+        [today],
+        (err, row) => {
+            if (err) {
+                console.error('Ошибка при подсчете посетителей:', err);
+                return res.status(500).json({ error: err.message });
+            }
+            res.json({ count: row.count, date: today });
+        }
+    );
+});
+
+// API: зарегистрировать нового посетителя (с защитой от повторов)
+app.post('/api/visitors/register', (req, res) => {
+    // Получаем IP посетителя
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Пытаемся вставить запись. Если IP уже есть за сегодня — INSERT игнорируется
+    db.run(
+        'INSERT OR IGNORE INTO visitors (ip, visit_date) VALUES (?, ?)',
+        [ip, today],
+        function(err) {
+            if (err) {
+                console.error('Ошибка при регистрации посетителя:', err);
+                return res.status(500).json({ error: err.message });
+            }
+            
+            // this.changes === 1 — новая запись, this.changes === 0 — повторный визит
+            res.json({ 
+                success: true, 
+                isNew: this.changes === 1,
+                message: this.changes === 1 ? 'Новый посетитель' : 'Возвращающийся посетитель'
+            });
+        }
+    );
+});
 
 // Запуск сервера
 app.listen(PORT, () => {
@@ -180,3 +230,4 @@ app.listen(PORT, () => {
 ╚════════════════════════════════════════════╝
     `);
 });
+
