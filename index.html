@@ -63,22 +63,37 @@
 <a href="#" class="back-to-top">↑</a>
 
 <script>
-    // Счетчик посещений
-    let count = localStorage.getItem('visitCount');
-    if (count === null) {
-        count = 1;
-    } else {
-        count = parseInt(count) + 1;
+    // УНИКАЛЬНЫЙ СЧЕТЧИК ПОСЕТИТЕЛЕЙ (с бэкендом на Render)
+    const BACKEND_URL = 'https://pc-review-backend.onrender.com';
+    const visitorSpan = document.getElementById('uniqueVisitors');
+    
+    async function registerAndGetCount() {
+        try {
+            // 1. Регистрируем текущего посетителя (сервер сам решит, новый он или нет)
+            await fetch(`${BACKEND_URL}/api/visitors/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            // 2. Получаем актуальное количество уникальных посетителей за сегодня
+            const response = await fetch(`${BACKEND_URL}/api/visitors/today`);
+            const data = await response.json();
+            
+            // 3. Отображаем на странице
+            if (visitorSpan) {
+                visitorSpan.textContent = data.count;
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке счетчика:', error);
+            if (visitorSpan) {
+                visitorSpan.textContent = '?';
+            }
+        }
     }
-    localStorage.setItem('visitCount', count);
-    document.getElementById('visitCount').textContent = count;
+    
+    // Запускаем при загрузке страницы
+    registerAndGetCount();
 </script>
-
-<a href="https://t.me/pc_skupka" class="telegram-widget" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
-    <span>Написать в Telegram</span>
-</a>
-
       <script>
     // Автоматически подстраиваем отступ под высоту шапки
     function adjustHeaderOffset() {
