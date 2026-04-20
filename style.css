@@ -708,8 +708,8 @@ html {
 
 @media (max-width: 480px) {
     .telegram-widget {
-        bottom: 100px;
-        right: 20px;
+        bottom: 20px;
+        right: 10px;
         padding: 8px;
     }
     
@@ -928,7 +928,7 @@ body {
     }
     
     .telegram-widget {
-        bottom: 20px;
+        bottom: 100px;
         right: 20px;
         padding: 10px;
     }
