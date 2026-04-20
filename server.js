@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // ===== КОНФИГУРАЦИЯ ВКОНТАКТЕ =====
-const VK_ACCESS_TOKEN = 'vk1.a.BHsQZ0zrRHjj_8gtD5usDf9ehDme8IcIf5IR8cWkM0a4f05rRPRk2r0CmABTQZycMeUxlQRQnThBhd7EgCk_CvYz4oUMEHRikVCHVDZcQy12MM5NmZP5Qq2svnpaqAlvjSY5p3i_qIorP_ojGwiDEAVXKlHpX2vKGVIk8giUHx1Zzgd8c3Yr66H5sAk0BOwLSPdi4qxeMRE_Flc2PueVxw';
+const VK_ACCESS_TOKEN = 'vk1.a.ODur1t74H2a9vc0kzaCHwzrZNWXkA9wP4t5w7yK557N4ajg0yELIl0N9yrWsPkMPT6auylxXST8tRXs-b8kgEhlCfggufgnk2aqIzLUI-_m_kFIK31LSFVL0B6m30icP1tlLVbQuhryjX3y2b5Kb7ri0bSXe2P0KqwEhx8XFW738KQ3L5Q9zVGzBk9jkZWjt54m7pKVxOQXy1Wcuvn-BIg';
 const VK_GROUP_ID = 237856528;  // из вашего скриншота
 const VK_API_VERSION = '5.199';
 
