@@ -721,3 +721,266 @@ html {
         right: 60px;  /* Сдвигаем, чтобы не пересекалась с Telegram */
     }
 }
+
+/* ===== СОВРЕМЕННЫЕ УЛУЧШЕНИЯ ДИЗАЙНА ===== */
+
+/* Плавные цвета и градиенты */
+:root {
+    --primary: #00d2ff;
+    --primary-dark: #0099cc;
+    --primary-glow: rgba(0, 210, 255, 0.4);
+    --dark: #0f172a;
+    --light: #f8fafc;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Общий фон с градиентом */
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+}
+
+/* Карточки с эффектом стекла */
+.card, .contact-form, .contact-info, .feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(2px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ховер-эффекты для карточек */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Кнопки с градиентом и анимацией */
+.btn, .order-btn, .submit-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    background-size: 200% auto;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover, .order-btn:hover, .submit-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--primary-glow);
+}
+
+.btn:active, .order-btn:active, .submit-btn:active {
+    transform: translateY(1px);
+}
+
+/* Эффект пульсации при клике */
+.btn::after, .order-btn::after, .submit-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.btn:active::after, .order-btn:active::after, .submit-btn:active::after {
+    width: 100%;
+    height: 100%;
+}
+
+/* Поля ввода с анимацией */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    transition: all 0.2s;
+    border: 2px solid #e2e8f0;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.2);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+/* Анимация для заголовков */
+.page-title h1 {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: fadeInUp 0.6s ease;
+}
+
+.page-title p {
+    animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Анимация для карточек при загрузке */
+.card {
+    animation: fadeInScale 0.4s ease both;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Улучшенный баннер */
+.banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Улучшенный Telegram-виджет */
+.telegram-widget {
+    background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+    animation: float 3s ease-in-out infinite;
+    transition: all 0.3s;
+}
+
+.telegram-widget:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Адаптивные улучшения для телефонов */
+@media (max-width: 768px) {
+    .card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .telegram-widget {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px;
+    }
+    
+    .telegram-widget span {
+        display: none;
+    }
+    
+    .telegram-widget {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .telegram-widget img {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Сообщения об успехе/ошибке с анимацией */
+#formStatus p {
+    animation: fadeIn 0.3s ease;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+#formStatus p[style*="green"] {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+#formStatus p[style*="red"] {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Эффект загрузки для кнопки */
+.submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.submit-btn.loading::after {
+    content: " ⏳";
+}
