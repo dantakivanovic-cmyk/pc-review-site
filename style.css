@@ -437,6 +437,7 @@ html {
     height: 24px;
 }
 
+
 .telegram-widget:hover {
     background-color: #006699;
     transform: scale(1.05);
@@ -707,8 +708,8 @@ html {
 
 @media (max-width: 480px) {
     .telegram-widget {
-        bottom: 20px;
-        right: 10px;
+        bottom: 100px;
+        right: 20px;
         padding: 8px;
     }
     
