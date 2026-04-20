@@ -87,107 +87,76 @@
     </div>
 
        <script>
-        // ВСТАВЬ СВОИ ДАННЫЕ:
-        const BOT_TOKEN = '8454099739:AAGmWyYFBRp-_SLIjh_d-l-m_gZP8LTwkyI';
-        const CHAT_ID = '1362757094';
+    const form = document.getElementById('tgForm');
+    const statusDiv = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // ⚠️ ВАЖНО: замените этот URL на ваш реальный адрес на Render.com
+    // Например: https://pc-review-backend.onrender.com
+    const BACKEND_URL = 'https://ВАШ-ПРОЕКТ.onrender.com';
+    
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
         
-        const form = document.getElementById('tgForm');
-        const statusDiv = document.getElementById('formStatus');
-        const submitBtn = document.getElementById('submitBtn');
+        // Собираем данные
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const build = document.getElementById('build').value;
+        const message = document.getElementById('message').value.trim();
+        const agreement = document.getElementById('agreement').checked;
         
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
+        // Валидация
+        if (!name || !phone) {
+            statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Пожалуйста, заполните имя и телефон</p>';
+            return;
+        }
+        
+        if (!agreement) {
+            statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Подтвердите согласие на обработку данных</p>';
+            return;
+        }
+        
+        // UI: состояние загрузки
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+        submitBtn.textContent = '⏳ Отправка...';
+        statusDiv.innerHTML = '<p style="color: #00d2ff;">⏳ Отправляем заявку...</p>';
+        
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/submit-order`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, phone, email, build, message })
+            });
             
-            // Показываем, что идет отправка
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
-            statusDiv.innerHTML = '<p style="color: #00d2ff;">⏳ Отправляем заявку...</p>';
+            const result = await response.json();
             
-            // Собираем данные из формы
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const build = document.getElementById('build').value;
-            const message = document.getElementById('message').value.trim();
-            
-            // Проверяем обязательные поля
-            if (!name || !phone) {
-                statusDiv.innerHTML = '<p style="color: red;">❌ Пожалуйста, заполните имя и телефон</p>';
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить заявку';
-                return;
+            if (response.ok && result.success) {
+                statusDiv.innerHTML = '<p style="color: #10b981;">✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.</p>';
+                form.reset();
+            } else {
+                throw new Error(result.error || 'Ошибка сервера');
             }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            statusDiv.innerHTML = '<p style="color: #dc2626;">❌ Не удалось отправить заявку. Пожалуйста, позвоните нам: +7 (952) 430-79-76</p>';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.textContent = 'Отправить заявку';
             
-            const agreement = document.getElementById('agreement').checked;
-            if (!agreement) {
-                statusDiv.innerHTML = '<p style="color: red;">❌ Пожалуйста, подтвердите согласие на обработку данных</p>';
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить заявку';
-                return;
-            }
-            
-            // Формируем сообщение для Telegram
-            const telegramMessage = `📦 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📧 Email: ${email || 'не указан'}\n💻 Сборка: ${build}\n\n📝 Сообщение:\n${message || 'не указано'}\n\n🕐 Время: ${new Date().toLocaleString('ru-RU')}`;
-            
-            // Прокси-адрес для обхода блокировки
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const telegramApiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            
-            let response;
-            let result;
-            
-            try {
-                // Пробуем через прокси
-                response = await fetch(proxyUrl + telegramApiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: telegramMessage
-                    })
-                });
-                result = await response.json();
-                
-                if (result.ok) {
-                    statusDiv.innerHTML = '<p style="color: green;">✅ Заявка отправлена! Мы свяжемся с вами.</p>';
-                    form.reset();
-                } else {
-                    throw new Error('Ошибка через прокси');
+            // Автоматически скрываем сообщение через 5 секунд
+            setTimeout(() => {
+                if (statusDiv.innerHTML.includes('✅') || statusDiv.innerHTML.includes('❌')) {
+                    statusDiv.innerHTML = '';
                 }
-            } catch (error) {
-                // Если прокси не сработал, пробуем прямой запрос
-                try {
-                    response = await fetch(telegramApiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: CHAT_ID,
-                            text: telegramMessage
-                        })
-                    });
-                    result = await response.json();
-                    
-                    if (result.ok) {
-                        statusDiv.innerHTML = '<p style="color: green;">✅ Заявка отправлена! Мы свяжемся с вами.</p>';
-                        form.reset();
-                    } else {
-                        throw new Error('Ошибка прямого запроса');
-                    }
-                } catch (finalError) {
-                    console.error('Ошибка:', finalError);
-                    statusDiv.innerHTML = '<p style="color: red;">❌ Не удалось отправить заявку. Позвоните нам: +7 (952) 430-79-76</p>';
-                }
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Отправить заявку';
-                setTimeout(() => {
-                    if (statusDiv.innerHTML.includes('✅') || statusDiv.innerHTML.includes('❌')) {
-                        statusDiv.innerHTML = '';
-                    }
-                }, 5000);
-            }
-        });
-    </script>
+            }, 5000);
+        }
+    });
+</script>
 
 <a href="#" class="back-to-top">↑</a>
 
