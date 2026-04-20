@@ -1,72 +1,174 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f0f0;
+/* ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗОВЫЕ СТИЛИ ========== */
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --primary-glow: rgba(99, 102, 241, 0.4);
+    --dark: #0f172a;
+    --dark-light: #1e293b;
+    --gray: #64748b;
+    --gray-light: #94a3b8;
+    --light: #f8fafc;
+    --success: #10b981;
+    --error: #ef4444;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.menu {
-    background-color: #1a1a2e;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(145deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: var(--dark);
+    line-height: 1.5;
+    padding-top: 80px;
+}
+
+/* ========== HEADER И НАВИГАЦИЯ ========== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.header .logo {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: opacity 0.3s;
+}
+
+.header .logo:hover {
+    opacity: 0.8;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    color: var(--gray-light);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.3s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-links a:hover::after {
     width: 100%;
 }
 
-.menu a {
-    color: #00d2ff;
-    font-family: Arial;
-    font-size: 14pt;
-    text-decoration: none;
-    margin: 0 10px;
-}
-
-.menu a:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-.menu .logo {
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 20pt;
-    font-weight: bold;
-}
-
+/* ========== БАННЕР (HERO) ========== */
 .banner {
-    background-color: #16213e;
-    padding: 60px 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    padding: 80px 20px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .banner h1 {
-    color: #ffffff;
-    font-size: 36pt;
-    margin: 0 0 20px 0;
+    color: white;
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .banner p {
-    color: #cccccc;
-    font-size: 18pt;
-    margin: 0 0 30px 0;
+    color: var(--gray-light);
+    font-size: 20px;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .banner .btn {
-    background-color: #00d2ff;
-    color: #ffffff;
-    padding: 12px 30px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
     display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 14px 36px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 40px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px var(--primary-glow);
 }
 
 .banner .btn:hover {
-    background-color: #0099cc;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--primary-glow);
 }
 
+/* ========== КАРТОЧКИ ПРЕИМУЩЕСТВ (FEATURES) ========== */
 .features {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 50px 20px;
+    padding: 60px 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -74,48 +176,70 @@ body {
 .feature-card {
     text-align: center;
     width: 33%;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(99, 102, 241, 0.3);
 }
 
 .feature-card h3 {
-    color: #333333;
-    font-size: 20pt;
-    margin-bottom: 10px;
+    color: white;
+    font-size: 22px;
+    margin-bottom: 12px;
 }
 
 .feature-card p {
-    color: #666666;
-    font-size: 12pt;
+    color: var(--gray-light);
+    font-size: 14px;
 }
 
+/* ========== ЗАГОЛОВКИ СТРАНИЦ ========== */
 .page-title {
     text-align: center;
     padding: 40px 20px;
 }
 
 .page-title h1 {
-    color: #333333;
-    font-size: 28pt;
-    margin: 0 0 10px 0;
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(135deg, white, var(--primary-light));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
 }
 
 .page-title p {
-    color: #666666;
-    font-size: 14pt;
-    margin: 0;
+    color: var(--gray-light);
+    font-size: 16px;
 }
 
+/* ========== КАРТОЧКИ ТОВАРОВ (CATALOG) ========== */
 .card {
     display: flex;
-    background-color: #f8f8f8;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
     overflow: hidden;
     width: 80%;
     margin: 0 auto 30px auto;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: var(--shadow-xl);
 }
 
 .card-image {
@@ -127,31 +251,30 @@ body {
 .card-image img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px;
+    border-radius: 16px;
 }
 
 .card-content {
     width: 70%;
-    padding: 20px;
+    padding: 24px;
 }
 
 .card-content h3 {
-    color: #333333;
-    font-size: 20pt;
-    margin: 0 0 15px 0;
+    color: white;
+    font-size: 24px;
+    margin-bottom: 16px;
 }
 
 .specs {
     list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
+    margin-bottom: 20px;
 }
 
 .specs li {
-    color: #666666;
-    font-size: 12pt;
-    padding: 5px 0;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--gray-light);
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .specs li:last-child {
@@ -159,42 +282,53 @@ body {
 }
 
 .price {
-    color: #00d2ff;
-    font-size: 24pt;
-    font-weight: bold;
-    margin: 15px 0;
+    color: var(--primary-light);
+    font-size: 28px;
+    font-weight: 700;
+    margin: 16px 0;
+}
+
+/* ========== КНОПКИ ========== */
+.btn, .order-btn, .submit-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 12px 28px;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-align: center;
+}
+
+.btn:hover, .order-btn:hover, .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--primary-glow);
 }
 
 .order-btn {
-    display: inline-block;
-    background-color: #00d2ff;
-    color: #ffffff;
-    padding: 10px 25px;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    width: auto;
 }
 
-.order-btn:hover {
-    background-color: #0099cc;
-}
-
+/* ========== ФОРМА ОБРАТНОЙ СВЯЗИ ========== */
 .contact-form {
     width: 60%;
     margin: 0 auto 40px auto;
-    background-color: #f8f8f8;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .contact-form h2 {
     text-align: center;
-    color: #333333;
-    font-size: 24pt;
-    margin-top: 0;
-    margin-bottom: 25px;
+    color: white;
+    font-size: 28px;
+    margin-bottom: 28px;
 }
 
 .form-group {
@@ -203,177 +337,42 @@ body {
 
 .form-group label {
     display: block;
-    color: #333333;
-    font-size: 12pt;
-    font-weight: bold;
+    color: var(--gray-light);
+    font-size: 14px;
+    font-weight: 500;
     margin-bottom: 8px;
 }
 
-.form-group input[type="text"],
-.form-group input[type="tel"],
-.form-group input[type="email"],
+.form-group input,
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 12pt;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    font-size: 14px;
     font-family: inherit;
-    box-sizing: border-box;
-    transition: border-color 0.3s;
+    color: white;
+    transition: all 0.2s;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #00d2ff;
+    border-color: var(--primary);
     outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
-.submit-btn {
-    background-color: #00d2ff;
-    color: #ffffff;
-    padding: 14px 35px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14pt;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--gray);
 }
-
-.submit-btn:hover {
-    background-color: #0099cc;
-}
-
-.contact-info {
-    width: 60%;
-    margin: 0 auto 40px auto;
-    background-color: #e0e0e0;
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-}
-
-.contact-info h3 {
-    color: #333333;
-    font-size: 20pt;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-.contact-info p {
-    color: #555555;
-    font-size: 12pt;
-    margin: 10px 0;
-}
-
-.contact-info a {
-    color: #00d2ff;
-    text-decoration: none;
-}
-
-.contact-info a:hover {
-    text-decoration: underline;
-}
-
-.map-selection {
-    text-align: center;
-    padding: 50px 20px;
-    background-color: #ffffff;
-    margin-top: 40px;
-}
-
-.map-selection h2 {
-    color: #333333;
-    font-size: 28pt;
-    margin-bottom: 15px;
-}
-
-.map-selection p {
-    color: #666666;
-    font-size: 14pt;
-    margin-bottom: 30px;
-}
-
-.map-container {
-    width: 80%;
-    margin: 0 auto;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-}
-
-.map-container iframe {
-    display: block;
-}
-
-
-html {
-    scroll-behavior: smooth;
-}
-
-@media (max-width: 480px) {
-    .banner h1 {
-        font-size: 24pt;
-    }
-    
-    .banner p {
-        font-size: 14pt;
-    }
-    
-    .page-title h1 {
-        font-size: 22pt;
-    }
-    
-    .price {
-        font-size: 20pt;
-    }
-}
-
-.back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: #00d2ff;
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 50px;
-    font-size: 24px;
-    text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-}
-
-.back-to-top:hover {
-    opacity: 1;
-}
-
-.card {
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-.order-btn {
-    transition: all 0.3s;
-}
-
-.order-btn:hover {
-    transform: scale(1.05);
-}
-
 
 .checkbox-group {
-    margin: 20px 0;
+    margin: 24px 0;
 }
 
 .checkbox-label {
@@ -381,7 +380,8 @@ html {
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    font-weight: normal;
+    color: var(--gray-light);
+    font-size: 14px;
 }
 
 .checkbox-label input {
@@ -390,7 +390,7 @@ html {
 }
 
 .checkbox-label a {
-    color: #00d2ff;
+    color: var(--primary-light);
     text-decoration: none;
 }
 
@@ -398,27 +398,108 @@ html {
     text-decoration: underline;
 }
 
+/* ========== КОНТАКТНАЯ ИНФОРМАЦИЯ ========== */
+.contact-info {
+    width: 60%;
+    margin: 0 auto 40px auto;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 28px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-info h3 {
+    color: white;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    color: var(--gray-light);
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.contact-info a {
+    color: var(--primary-light);
+    text-decoration: none;
+}
+
+/* ========== КАРТА ========== */
+.map-selection {
+    text-align: center;
+    padding: 50px 20px;
+    margin-top: 40px;
+}
+
+.map-selection h2 {
+    color: white;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.map-selection p {
+    color: var(--gray-light);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.map-container {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+/* ========== СЧЁТЧИК ПОСЕЩЕНИЙ ========== */
 .visitor-counter {
     text-align: center;
     padding: 20px;
-    background-color: #f0f0f0;
-    font-size: 12pt;
-    color: #666666;
-    border-top: 1px solid #e0e0e0;
+    font-size: 14px;
+    color: var(--gray-light);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 20px;
 }
 
 .visitor-counter span {
-    color: #00d2ff;
+    color: var(--primary-light);
     font-weight: bold;
-    font-size: 16pt;
+    font-size: 18px;
 }
 
+/* ========== КНОПКА НАВЕРХ ========== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 48px;
+    font-size: 24px;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.3s;
+    z-index: 99;
+}
+
+.back-to-top:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+/* ========== TELEGRAM ВИДЖЕТ ========== */
 .telegram-widget {
     position: fixed;
     bottom: 100px;
     right: 30px;
-    background-color: #0088cc;
+    background: linear-gradient(135deg, #2d9cdb, #1e6f9f);
     color: white;
     padding: 12px 20px;
     border-radius: 50px;
@@ -426,10 +507,22 @@ html {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s, background-color 0.3s;
+    font-weight: 600;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
     z-index: 100;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+.telegram-widget:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(45, 156, 219, 0.4);
 }
 
 .telegram-widget img {
@@ -437,411 +530,30 @@ html {
     height: 24px;
 }
 
-
-.telegram-widget:hover {
-    background-color: #006699;
-    transform: scale(1.05);
+/* ========== СООБЩЕНИЯ ФОРМЫ ========== */
+#formStatus p {
+    animation: fadeIn 0.3s ease;
+    padding: 12px;
+    border-radius: 16px;
+    font-weight: 500;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #1a1a2e;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+#formStatus p[style*="green"] {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
 }
 
-.header .logo {
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 20pt;
-    font-weight: bold;
-    text-decoration: none;
-    transition: opacity 0.3s;
+#formStatus p[style*="red"] {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--error);
 }
 
-.header .logo:hover {
-    opacity: 0.8;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.nav-links a {
-    color: #00d2ff;
-    font-family: Arial;
-    font-size: 14pt;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #ffffff;
-}
-
-body {
-    padding-top: 30pt;
-}
-
-* {
-    user-select: none;
-}
-
-input, textarea, select {
-    user-select: text;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 70px;  /* Это компенсирует фиксированную шапку при якорях */
-}
-/* ========== АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ (до 768px) ========== */
-@media (max-width: 768px) {
-    .features {
-        flex-direction: column;
-    }
-    
-    /* Шапка становится вертикальной */
-    .header {
-        flex-direction: column;
-        padding: 15px;
-        gap: 15px;
-    }
-    
-    .nav-links {
-        gap: 20px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    /* Баннер */
-    .banner {
-        padding: 40px 15px;
-    }
-    
-    .banner h1 {
-        font-size: 24pt;
-    }
-    
-    .banner p {
-        font-size: 14pt;
-    }
-    
-    /* Преимущества — в столбик */
-    .features {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding: 30px 15px;
-    }
-    
-    .feature-card {
-        width: 90%;
-    }
-    
-    /* Заголовки страниц */
-    .page-title {
-        padding: 30px 15px;
-    }
-    
-    .page-title h1 {
-        font-size: 22pt;
-    }
-    
-    /* Карточки товаров — в столбик */
-    .card {
-        flex-direction: column;
-        width: 95%;
-        margin: 0 auto 20px auto;
-    }
-    
-    .card-image {
-        width: 100%;
-        padding: 15px;
-    }
-    
-    .card-content {
-        width: 100%;
-        padding: 15px;
-    }
-    
-    .card-content h3 {
-        font-size: 18pt;
-    }
-    
-    .price {
-        font-size: 20pt;
-    }
-    
-    /* Форма и контакты */
-    .contact-form {
-        width: 90%;
-        padding: 20px;
-    }
-    
-    .contact-info {
-        width: 90%;
-        padding: 20px;
-    }
-    
-    /* Карта */
-    .map-container {
-        width: 95%;
-    }
-    
-    .map-selection h2 {
-        font-size: 22pt;
-    }
-    
-    /* Кнопки */
-    .order-btn, .submit-btn {
-        width: 100%;
-        text-align: center;
-        box-sizing: border-box;
-    }
-    
-    /* Поля ввода */
-    .form-group input[type="text"],
-    .form-group input[type="tel"],
-    .form-group input[type="email"],
-    .form-group select,
-    .form-group textarea {
-        font-size: 16px; /* Чтобы не срабатывал зум на телефонах */
-    }
-}
-
-/* ========== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ (до 480px) ========== */
-@media (max-width: 480px) {
-    
-    .banner h1 {
-        font-size: 20pt;
-    }
-    
-    .banner p {
-        font-size: 12pt;
-    }
-    
-    .feature-card h3 {
-        font-size: 16pt;
-    }
-    
-    .feature-card p {
-        font-size: 11pt;
-    }
-    
-    .page-title h1 {
-        font-size: 20pt;
-    }
-    
-    .page-title p {
-        font-size: 12pt;
-    }
-    
-    .card-content h3 {
-        font-size: 16pt;
-    }
-    
-    .specs li {
-        font-size: 11pt;
-    }
-    
-    .price {
-        font-size: 18pt;
-    }
-    
-    .contact-form h2 {
-        font-size: 20pt;
-    }
-    
-    .contact-info h3 {
-        font-size: 18pt;
-    }
-    
-    .contact-info p {
-        font-size: 11pt;
-    }
-    
-    .back-to-top, .telegram-widget {
-        transform: scale(0.9);
-    }
-    
-    .telegram-widget span {
-        display: none; /* На телефонах скрываем текст, оставляем только иконку */
-    }
-    
-    .telegram-widget {
-        padding: 10px;
-        border-radius: 50%;
-        bottom: 90px;
-        right: 15px;
-    }
-    
-    .back-to-top {
-        bottom: 20px;
-        right: 15px;
-    }
-}
-
-/* Отступы для всего контента на телефонах */
-@media (max-width: 768px) {
-    body {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-    
-    /* Для баннера убираем лишние отступы, чтобы не было двойных */
-    .banner {
-        margin-left: -10px;
-        margin-right: -10px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .telegram-widget {
-        bottom: 20px;
-        right: 10px;
-        padding: 8px;
-    }
-    
-    .telegram-widget span {
-        display: none;  /* Скрываем текст, оставляем только иконку */
-    }
-    
-    .back-to-top {
-        bottom: 20px;
-        right: 60px;  /* Сдвигаем, чтобы не пересекалась с Telegram */
-    }
-}
-
-/* ===== СОВРЕМЕННЫЕ УЛУЧШЕНИЯ ДИЗАЙНА ===== */
-
-/* Плавные цвета и градиенты */
-:root {
-    --primary: #00d2ff;
-    --primary-dark: #0099cc;
-    --primary-glow: rgba(0, 210, 255, 0.4);
-    --dark: #0f172a;
-    --light: #f8fafc;
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
-    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-/* Общий фон с градиентом */
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-}
-
-/* Карточки с эффектом стекла */
-.card, .contact-form, .contact-info, .feature-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(2px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Ховер-эффекты для карточек */
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Кнопки с градиентом и анимацией */
-.btn, .order-btn, .submit-btn {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    background-size: 200% auto;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn:hover, .order-btn:hover, .submit-btn:hover {
-    background-position: right center;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px var(--primary-glow);
-}
-
-.btn:active, .order-btn:active, .submit-btn:active {
-    transform: translateY(1px);
-}
-
-/* Эффект пульсации при клике */
-.btn::after, .order-btn::after, .submit-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s;
-}
-
-.btn:active::after, .order-btn:active::after, .submit-btn:active::after {
-    width: 100%;
-    height: 100%;
-}
-
-/* Поля ввода с анимацией */
-.form-group input,
-.form-group select,
-.form-group textarea {
-    transition: all 0.2s;
-    border: 2px solid #e2e8f0;
-    background: white;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.2);
-    transform: translateY(-2px);
-    outline: none;
-}
-
-/* Анимация для заголовков */
-.page-title h1 {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: fadeInUp 0.6s ease;
-}
-
-.page-title p {
-    animation: fadeInUp 0.6s ease 0.1s both;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Анимация для карточек при загрузке */
+/* ========== АНИМАЦИИ ========== */
 .card {
     animation: fadeInScale 0.4s ease both;
 }
@@ -861,13 +573,13 @@ body {
     }
 }
 
-/* Кастомный скроллбар */
+/* ========== СКРОЛЛБАР ========== */
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #e2e8f0;
+    background: var(--dark-light);
     border-radius: 10px;
 }
 
@@ -877,111 +589,144 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
+    background: var(--primary-light);
 }
 
-/* Улучшенный баннер */
-.banner {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, transparent 70%);
-    animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Улучшенный Telegram-виджет */
-.telegram-widget {
-    background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-    animation: float 3s ease-in-out infinite;
-    transition: all 0.3s;
-}
-
-.telegram-widget:hover {
-    transform: scale(1.1);
-    box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
-}
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
-}
-
-/* Адаптивные улучшения для телефонов */
+/* ========== АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ (до 768px) ========== */
 @media (max-width: 768px) {
-    .card:hover {
-        transform: translateY(-3px);
+    body {
+        padding-top: 120px;
     }
-    
+
+    .header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 20px;
+    }
+
+    .nav-links {
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .banner h1 {
+        font-size: 32px;
+    }
+
+    .banner p {
+        font-size: 16px;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .feature-card {
+        width: 90%;
+    }
+
+    .card {
+        flex-direction: column;
+        width: 95%;
+    }
+
+    .card-image {
+        width: 100%;
+    }
+
+    .card-content {
+        width: 100%;
+    }
+
+    .contact-form, .contact-info {
+        width: 90%;
+        padding: 24px;
+    }
+
+    .map-container {
+        width: 95%;
+    }
+
     .telegram-widget {
-        bottom: 100px;
+        bottom: 90px;
         right: 20px;
         padding: 10px;
-    }
-    
-    .telegram-widget span {
-        display: none;
-    }
-    
-    .telegram-widget {
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        padding: 0;
+        width: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    
+
+    .telegram-widget span {
+        display: none;
+    }
+
     .telegram-widget img {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
+    }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
     }
 }
 
-/* Сообщения об успехе/ошибке с анимацией */
-#formStatus p {
-    animation: fadeIn 0.3s ease;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: 500;
+/* ========== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ (до 480px) ========== */
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 24px;
+    }
+
+    .banner p {
+        font-size: 14px;
+    }
+
+    .page-title h1 {
+        font-size: 24px;
+    }
+
+    .card-content h3 {
+        font-size: 18px;
+    }
+
+    .price {
+        font-size: 22px;
+    }
+
+    .contact-form h2 {
+        font-size: 22px;
+    }
+
+    .feature-card h3 {
+        font-size: 18px;
+    }
+
+    .telegram-widget {
+        bottom: 20px;
+        right: 15px;
+    }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 75px;
+    }
+
+    .order-btn, .submit-btn {
+        width: 100%;
+    }
 }
 
-#formStatus p[style*="green"] {
-    background: #d1fae5;
-    color: #065f46;
+/* ========== ЗАПРЕТ ВЫДЕЛЕНИЯ (КРОМЕ ФОРМ) ========== */
+* {
+    user-select: none;
 }
 
-#formStatus p[style*="red"] {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Эффект загрузки для кнопки */
-.submit-btn.loading {
-    pointer-events: none;
-    opacity: 0.7;
-}
-
-.submit-btn.loading::after {
-    content: " ⏳";
+input, textarea, select {
+    user-select: text;
 }
