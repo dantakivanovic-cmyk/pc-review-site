@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3000;
 
 // ===== КОНФИГУРАЦИЯ ВКОНТАКТЕ =====
 const VK_ACCESS_TOKEN = 'vk1.a.yefEUBQ3PV212zraqBeBJL6fqFk2nH1M29GadDYWKPtuzQ8uxVruJyUv0qOryWzozDfEnzXLqLXt2IC91HXQ1zVpUXswBGLKXC5ameEtNyhhxV3iBdPQZkXAhNmjXrbmR5jF2im03rPDxOSzzMiICm90zjijl_T9ep04cT_Z75RqU5s6qnb1lsd19cypKIA5LKcWRqIanzXkpFHqHqbcZg';
-const VK_GROUP_ID = 237856528;  // из вашего скриншота
-const VK_API_VERSION = '5.199'
-const ADMIN_VK_ID = 1362757094;  // твой личный ID ВК
+const VK_GROUP_ID = 237856528;
+const VK_API_VERSION = '5.199';
+const ADMIN_VK_ID = 1362757094;  // ← ЭТО БЫЛО ПРОПУЩЕНО!
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +26,7 @@ db.run(`
   )
 `);
 
-// Новая таблица для уникальных посетителей (с fingerprint)
+// Таблица для уникальных посетителей
 db.run(`
   CREATE TABLE IF NOT EXISTS visitors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,14 +48,24 @@ async function sendToVK(text) {
         random_id: Math.floor(Math.random() * 1000000)
     });
     
-    const response = await fetch(`${url}?${params}`);
-    const result = await response.json();
-    return !result.error;
+    try {
+        const response = await fetch(`${url}?${params}`);
+        const result = await response.json();
+        if (result.error) {
+            console.error('Ошибка ВК:', result.error);
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error('Ошибка сети:', error);
+        return false;
+    }
 }
 
 // ===== API ЗАЯВОК =====
 app.post('/api/submit-order', async (req, res) => {
     const { name, phone, email, build, message } = req.body;
+    console.log('📥 Получена заявка от:', name);
     
     if (!name || !phone) {
         return res.status(400).json({ error: 'Имя и телефон обязательны' });
@@ -72,11 +82,11 @@ app.post('/api/submit-order', async (req, res) => {
     if (sent) {
         res.json({ success: true });
     } else {
-        res.status(500).json({ error: 'Ошибка отправки' });
+        res.status(500).json({ error: 'Ошибка отправки в ВК' });
     }
 });
 
-// ===== НОВЫЙ API СЧЕТЧИКА ПОСЕТИТЕЛЕЙ (с fingerprint) =====
+// ===== API СЧЕТЧИКА ПОСЕТИТЕЛЕЙ =====
 app.post('/api/visitors/register', (req, res) => {
     const { fingerprint } = req.body;
     const today = new Date().toISOString().split('T')[0];
@@ -85,30 +95,20 @@ app.post('/api/visitors/register', (req, res) => {
         return res.status(400).json({ error: 'Fingerprint required' });
     }
     
-    // Проверяем, был ли этот fingerprint уже сегодня
     db.get(
         'SELECT * FROM visitors WHERE fingerprint = ? AND visit_date = ?',
         [fingerprint, today],
         (err, row) => {
             if (err) {
-                console.error('Ошибка при проверке посетителя:', err);
+                console.error('Ошибка при проверке:', err);
                 return res.status(500).json({ error: err.message });
             }
             
             if (row) {
-                // Обновляем время последнего визита
-                db.run(
-                    'UPDATE visitors SET last_seen = CURRENT_TIMESTAMP WHERE id = ?',
-                    [row.id]
-                );
-                return res.json({ 
-                    success: true, 
-                    isNew: false,
-                    message: 'Возвращающийся посетитель'
-                });
+                db.run('UPDATE visitors SET last_seen = CURRENT_TIMESTAMP WHERE id = ?', [row.id]);
+                return res.json({ success: true, isNew: false });
             }
             
-            // Новый уникальный посетитель
             db.run(
                 'INSERT INTO visitors (fingerprint, visit_date) VALUES (?, ?)',
                 [fingerprint, today],
@@ -117,43 +117,19 @@ app.post('/api/visitors/register', (req, res) => {
                         console.error('Ошибка при регистрации:', err);
                         return res.status(500).json({ error: err.message });
                     }
-                    res.json({ 
-                        success: true, 
-                        isNew: true,
-                        message: 'Новый уникальный посетитель'
-                    });
+                    res.json({ success: true, isNew: true });
                 }
             );
         }
     );
 });
 
-// Получить количество уникальных посетителей за сегодня
 app.get('/api/visitors/today', (req, res) => {
     const today = new Date().toISOString().split('T')[0];
     
-    db.get(
-        'SELECT COUNT(*) as count FROM visitors WHERE visit_date = ?',
-        [today],
-        (err, row) => {
-            if (err) {
-                console.error('Ошибка при подсчете:', err);
-                return res.status(500).json({ error: err.message });
-            }
-            res.json({ 
-                count: row.count, 
-                date: today,
-                updatedAt: new Date().toISOString()
-            });
-        }
-    );
-});
-
-// Получить статистику за все время
-app.get('/api/visitors/stats', (req, res) => {
-    db.get('SELECT COUNT(DISTINCT fingerprint) as total FROM visitors', (err, row) => {
+    db.get('SELECT COUNT(*) as count FROM visitors WHERE visit_date = ?', [today], (err, row) => {
         if (err) return res.status(500).json({ error: err.message });
-        res.json({ totalUnique: row.total });
+        res.json({ count: row.count, date: today });
     });
 });
 
