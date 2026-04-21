@@ -732,10 +732,16 @@ body {
 /* ========== ЗАПРЕТ ВЫДЕЛЕНИЯ (КРОМЕ ФОРМ) ========== */
 * {
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 input, textarea, select {
     user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 /* ========== СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО СПИСКА (SELECT) ========== */
