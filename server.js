@@ -13,6 +13,15 @@ const ADMIN_VK_ID = 523418464;  // ← ЭТО БЫЛО ПРОПУЩЕНО!
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
 
 const db = new sqlite3.Database('./orders.db');
 
