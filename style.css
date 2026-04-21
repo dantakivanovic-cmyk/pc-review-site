@@ -774,3 +774,135 @@ input, textarea, select {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/* ========== УБИРАЕМ ЛИШНИЕ ОТСТУПЫ ========== */
+body {
+    padding-top: 0;  /* Убираем костыльный отступ, так как .header уже fixed */
+}
+
+.header {
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Компенсируем фиксированную шапку для якорей */
+html {
+    scroll-padding-top: 80px;
+}
+
+/* Убираем лишние маржины у секций */
+.features, .map-selection, .page-title {
+    margin: 0;
+}
+
+/* ========== ПАРАЛЛАКС ДЛЯ БАННЕРА ========== */
+.banner {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* ========== АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ========== */
+.feature-card, .card, .contact-form, .contact-info {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.feature-card.visible, .card.visible, .contact-form.visible, .contact-info.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========== ДИНАМИЧЕСКИЙ ФОН ДЛЯ КАРТОЧЕК ========== */
+.card {
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+.card:hover {
+    transform: translateY(-12px) scale(1.01);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== ЭФФЕКТ ПЕЧАТИ ДЛЯ ЗАГОЛОВКОВ (опционально) ========== */
+.page-title h1 {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--primary);
+    animation: blinkCursor 0.75s step-end infinite;
+}
+
+@keyframes blinkCursor {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary); }
+}
+
+/* Адаптация для мобильных — убираем эффект печати */
+@media (max-width: 768px) {
+    .page-title h1 {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+    }
+}
+
+/* ========== ИНДИКАТОР ЗАГРУЗКИ ДЛЯ КНОПОК ========== */
+.btn, .order-btn, .submit-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before, .order-btn::before, .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before, .order-btn:hover::before, .submit-btn:hover::before {
+    left: 100%;
+}
+
+/* ========== АДАПТАЦИЯ ШРИФТОВ ДЛЯ ЛУЧШЕЙ ЧИТАЕМОСТИ ========== */
+body {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    letter-spacing: -0.02em;
+}
+
+/* ========== ПЛАВНОЕ ПОЯВЛЕНИЕ КАРТЫ ========== */
+.map-container {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.map-container:hover {
+    transform: scale(1.01);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ========== УЛУЧШЕННЫЙ СЧЁТЧИК ПОСЕТИТЕЛЕЙ ========== */
+.visitor-counter {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.visitor-counter span {
+    font-size: 22px;
+    font-weight: 800;
+}
