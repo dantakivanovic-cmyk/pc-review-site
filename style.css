@@ -179,7 +179,7 @@ body {
 .feature-card {
     text-align: center;
     flex: 1;
-    min-width: 250px;
+    min-width: 280px;
     max-width: 350px;
     padding: 30px 20px;
     background: rgba(255, 255, 255, 0.08);
@@ -187,12 +187,10 @@ body {
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(99, 102, 241, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
 }
 
 .feature-card h3 {
@@ -204,6 +202,14 @@ body {
 .feature-card p {
     color: var(--gray-light);
     font-size: 14px;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(99, 102, 241, 0.3);
 }
 
 /* ========== ЗАГОЛОВКИ СТРАНИЦ ========== */
