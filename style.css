@@ -326,7 +326,7 @@ body {
 
 .contact-form h2 {
     text-align: center;
-    color: blue;
+    color: White;
     font-size: 28px;
     margin-bottom: 28px;
 }
@@ -729,4 +729,48 @@ body {
 
 input, textarea, select {
     user-select: text;
+}
+
+/* ========== СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО СПИСКА (SELECT) ========== */
+
+/* Основной стиль для select */
+.form-group select {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238188cf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+/* Цвет текста внутри select */
+.form-group select option {
+    background: #1e293b;
+    color: white;
+    padding: 12px;
+}
+
+/* При фокусе */
+.form-group select:focus {
+    border-color: var(--primary);
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* При наведении */
+.form-group select:hover {
+    border-color: var(--primary-light);
+}
+
+/* Для disabled состояния */
+.form-group select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
