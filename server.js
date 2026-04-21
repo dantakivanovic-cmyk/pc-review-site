@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 const VK_ACCESS_TOKEN = 'vk1.a.yefEUBQ3PV212zraqBeBJL6fqFk2nH1M29GadDYWKPtuzQ8uxVruJyUv0qOryWzozDfEnzXLqLXt2IC91HXQ1zVpUXswBGLKXC5ameEtNyhhxV3iBdPQZkXAhNmjXrbmR5jF2im03rPDxOSzzMiICm90zjijl_T9ep04cT_Z75RqU5s6qnb1lsd19cypKIA5LKcWRqIanzXkpFHqHqbcZg';
 const VK_GROUP_ID = 237856528;
 const VK_API_VERSION = '5.199';
-const ADMIN_VK_ID = 1362757094;  // ← ЭТО БЫЛО ПРОПУЩЕНО!
+const ADMIN_VK_ID = 523418464;  // ← ЭТО БЫЛО ПРОПУЩЕНО!
 
 app.use(cors());
 app.use(express.json());
