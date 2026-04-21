@@ -9,19 +9,10 @@ const PORT = process.env.PORT || 3000;
 const VK_ACCESS_TOKEN = 'vk1.a.yefEUBQ3PV212zraqBeBJL6fqFk2nH1M29GadDYWKPtuzQ8uxVruJyUv0qOryWzozDfEnzXLqLXt2IC91HXQ1zVpUXswBGLKXC5ameEtNyhhxV3iBdPQZkXAhNmjXrbmR5jF2im03rPDxOSzzMiICm90zjijl_T9ep04cT_Z75RqU5s6qnb1lsd19cypKIA5LKcWRqIanzXkpFHqHqbcZg';
 const VK_GROUP_ID = 237856528;
 const VK_API_VERSION = '5.199';
-const ADMIN_VK_ID = 523418464;  // ← ЭТО БЫЛО ПРОПУЩЕНО!
+const ADMIN_VK_ID = 523418464;  // ← ТВОЙ НОВЫЙ ID
 
 app.use(cors());
 app.use(express.json());
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
 
 const db = new sqlite3.Database('./orders.db');
 
@@ -61,17 +52,17 @@ async function sendToVK(text) {
         const response = await fetch(`${url}?${params}`);
         const result = await response.json();
         if (result.error) {
-            console.error('Ошибка ВК:', result.error);
+            console.error('❌ Ошибка ВК:', result.error);
             return false;
         }
+        console.log('✅ Сообщение отправлено в ВК');
         return true;
     } catch (error) {
-        console.error('Ошибка сети:', error);
+        console.error('❌ Ошибка сети:', error);
         return false;
     }
 }
 
-// ===== API ЗАЯВОК =====
 app.post('/api/submit-order', async (req, res) => {
     const { name, phone, email, build, message } = req.body;
     console.log('📥 Получена заявка от:', name);
@@ -95,7 +86,6 @@ app.post('/api/submit-order', async (req, res) => {
     }
 });
 
-// ===== API СЧЕТЧИКА ПОСЕТИТЕЛЕЙ =====
 app.post('/api/visitors/register', (req, res) => {
     const { fingerprint } = req.body;
     const today = new Date().toISOString().split('T')[0];
@@ -143,7 +133,15 @@ app.get('/api/visitors/today', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-    res.json({ status: 'OK', mode: 'visitor-counter-v2' });
+    res.json({ status: 'OK', mode: 'full-backend' });
+});
+
+app.get('/', (req, res) => {
+    res.json({
+        name: 'PC Review Backend',
+        status: 'running',
+        version: '2.0'
+    });
 });
 
 app.listen(PORT, () => {
