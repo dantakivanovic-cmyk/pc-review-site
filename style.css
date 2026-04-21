@@ -33,7 +33,6 @@ body {
     background: linear-gradient(145deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
     color: var(--dark);
     line-height: 1.5;
-    padding-top: 80px;
 }
 
 /* ========== HEADER И НАВИГАЦИЯ ========== */
@@ -54,7 +53,6 @@ body {
 }
 
 .header .logo {
-    color: white;
     font-size: 24px;
     font-weight: 700;
     text-decoration: none;
@@ -105,10 +103,11 @@ body {
 /* ========== БАННЕР (HERO) ========== */
 .banner {
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    padding: 80px 20px;
+    padding: 100px 20px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    margin-top: 70px;
 }
 
 .banner::before {
@@ -164,11 +163,10 @@ body {
 }
 
 /* ========== КАРТОЧКИ ПРЕИМУЩЕСТВ (FEATURES) ========== */
-/* ========== КАРТОЧКИ ПРЕИМУЩЕСТВ (FEATURES) ========== */
 .features {
     display: flex;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
     gap: 30px;
     padding: 60px 20px;
     max-width: 1200px;
@@ -189,8 +187,15 @@ body {
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     min-height: 220px;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(99, 102, 241, 0.3);
 }
 
 .feature-card h3 {
@@ -203,19 +208,13 @@ body {
     color: var(--gray-light);
     font-size: 14px;
     line-height: 1.5;
-    flex-grow: 1;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(99, 102, 241, 0.3);
 }
 
 /* ========== ЗАГОЛОВКИ СТРАНИЦ ========== */
 .page-title {
     text-align: center;
     padding: 40px 20px;
+    margin-top: 60px;
 }
 
 .page-title h1 {
@@ -241,6 +240,7 @@ body {
     border-radius: 24px;
     overflow: hidden;
     width: 80%;
+    max-width: 1100px;
     margin: 0 auto 30px auto;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s;
@@ -257,6 +257,9 @@ body {
     width: 30%;
     text-align: center;
     padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-image img {
@@ -337,7 +340,7 @@ body {
 
 .contact-form h2 {
     text-align: center;
-    color: White;
+    color: white;
     font-size: 28px;
     margin-bottom: 28px;
 }
@@ -465,6 +468,11 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+.map-container iframe {
+    display: block;
+    width: 100%;
+}
+
 /* ========== СЧЁТЧИК ПОСЕЩЕНИЙ ========== */
 .visitor-counter {
     text-align: center;
@@ -473,12 +481,20 @@ body {
     color: var(--gray-light);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 12px 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .visitor-counter span {
     color: var(--primary-light);
     font-weight: bold;
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: 800;
 }
 
 /* ========== КНОПКА НАВЕРХ ========== */
@@ -603,12 +619,62 @@ body {
     background: var(--primary-light);
 }
 
+/* ========== ЗАПРЕТ ВЫДЕЛЕНИЯ ТЕКСТА (РАБОТАЕТ) ========== */
+body, body * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Разрешаем выделение ТОЛЬКО в полях ввода */
+input, textarea, select, 
+.form-group input, 
+.form-group textarea, 
+.form-group select,
+.checkbox-label,
+.checkbox-label * {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+}
+
+/* ========== СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО СПИСКА ========== */
+.form-group select {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238188cf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+}
+
+.form-group select option {
+    background: #1e293b;
+    color: white;
+    padding: 12px;
+}
+
+.form-group select:focus {
+    border-color: var(--primary);
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.form-group select:hover {
+    border-color: var(--primary-light);
+}
+
 /* ========== АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ (до 768px) ========== */
 @media (max-width: 768px) {
-    body {
-        padding-top: 120px;
-    }
-
     .header {
         flex-direction: column;
         gap: 12px;
@@ -621,6 +687,11 @@ body {
         justify-content: center;
     }
 
+    .banner {
+        margin-top: 100px;
+        padding: 60px 20px;
+    }
+
     .banner h1 {
         font-size: 32px;
     }
@@ -629,16 +700,16 @@ body {
         font-size: 16px;
     }
 
-    @media (max-width: 768px) {
     .features {
         flex-direction: column;
         align-items: center;
         gap: 20px;
     }
-    
+
     .feature-card {
         width: 90%;
         max-width: 400px;
+        min-width: auto;
     }
 
     .card {
@@ -664,7 +735,7 @@ body {
     }
 
     .telegram-widget {
-        bottom: 90px;
+        bottom: 20px;
         right: 20px;
         padding: 10px;
         border-radius: 50%;
@@ -686,7 +757,11 @@ body {
 
     .back-to-top {
         bottom: 20px;
-        right: 20px;
+        right: 80px;
+    }
+    
+    .page-title {
+        margin-top: 30px;
     }
 }
 
@@ -721,207 +796,25 @@ body {
     }
 
     .telegram-widget {
-        bottom: 20px;
+        bottom: 15px;
         right: 15px;
     }
 
     .back-to-top {
-        bottom: 20px;
-        right: 75px;
+        bottom: 15px;
+        right: 70px;
     }
 
     .order-btn, .submit-btn {
         width: 100%;
     }
-}
-
-/* ========== ЗАПРЕТ ВЫДЕЛЕНИЯ (КРОМЕ ФОРМ) ========== */
-* {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-input, textarea, select {
-    user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-}
-
-/* ========== СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ ВЫПАДАЮЩЕГО СПИСКА (SELECT) ========== */
-
-/* Основной стиль для select */
-.form-group select {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    color: white;
-    padding: 14px;
-    font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238188cf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-}
-
-/* Цвет текста внутри select */
-.form-group select option {
-    background: #1e293b;
-    color: white;
-    padding: 12px;
-}
-
-/* При фокусе */
-.form-group select:focus {
-    border-color: var(--primary);
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.12);
-}
-
-/* При наведении */
-.form-group select:hover {
-    border-color: var(--primary-light);
-}
-
-/* Для disabled состояния */
-.form-group select:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* ========== УБИРАЕМ ЛИШНИЕ ОТСТУПЫ ========== */
-body {
-    padding-top: 0;  /* Убираем костыльный отступ, так как .header уже fixed */
-}
-
-.header {
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
-/* Компенсируем фиксированную шапку для якорей */
-html {
-    scroll-padding-top: 80px;
-}
-
-/* Убираем лишние маржины у секций */
-.features, .map-selection, .page-title {
-    margin: 0;
-}
-
-/* ========== ПАРАЛЛАКС ДЛЯ БАННЕРА ========== */
-.banner {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-/* ========== АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ========== */
-.feature-card, .card, .contact-form, .contact-info {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.feature-card.visible, .card.visible, .contact-form.visible, .contact-info.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ========== ДИНАМИЧЕСКИЙ ФОН ДЛЯ КАРТОЧЕК ========== */
-.card {
-    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-}
-
-.card:hover {
-    transform: translateY(-12px) scale(1.01);
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--primary);
-    box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.5);
-}
-
-/* ========== ЭФФЕКТ ПЕЧАТИ ДЛЯ ЗАГОЛОВКОВ (опционально) ========== */
-.page-title h1 {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid var(--primary);
-    animation: blinkCursor 0.75s step-end infinite;
-}
-
-@keyframes blinkCursor {
-    from, to { border-color: transparent; }
-    50% { border-color: var(--primary); }
-}
-
-/* Адаптация для мобильных — убираем эффект печати */
-@media (max-width: 768px) {
-    .page-title h1 {
-        white-space: normal;
-        border-right: none;
-        animation: none;
+    
+    .visitor-counter {
+        width: 90%;
+        padding: 10px 16px;
     }
-}
-
-/* ========== ИНДИКАТОР ЗАГРУЗКИ ДЛЯ КНОПОК ========== */
-.btn, .order-btn, .submit-btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before, .order-btn::before, .submit-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.btn:hover::before, .order-btn:hover::before, .submit-btn:hover::before {
-    left: 100%;
-}
-
-/* ========== АДАПТАЦИЯ ШРИФТОВ ДЛЯ ЛУЧШЕЙ ЧИТАЕМОСТИ ========== */
-body {
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-h1, h2, h3 {
-    letter-spacing: -0.02em;
-}
-
-/* ========== ПЛАВНОЕ ПОЯВЛЕНИЕ КАРТЫ ========== */
-.map-container {
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.map-container:hover {
-    transform: scale(1.01);
-    box-shadow: var(--shadow-xl);
-}
-
-/* ========== УЛУЧШЕННЫЙ СЧЁТЧИК ПОСЕТИТЕЛЕЙ ========== */
-.visitor-counter {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(8px);
-    border-radius: 40px;
-    width: fit-content;
-    margin: 20px auto;
-    padding: 12px 28px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.visitor-counter span {
-    font-size: 22px;
-    font-weight: 800;
+    
+    .visitor-counter span {
+        font-size: 18px;
+    }
 }
